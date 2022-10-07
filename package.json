@@ -1,0 +1,25 @@
+{
+  "name": "pokeapi-vanillajs",
+  "version": "0.1.0",
+  "scripts": {
+    "build:scss": "node-sass --output-style compressed -o dist/styles src/styles",
+    "watch:scss": "onchange -i -v \"./src/styles/*.scss\" -- npm run build:scss",
+    "build:js": "eslint --fix ./src/js/*.js && babel src -d dist",
+    "watch:js": "onchange -i -v \"./src/js/*.js\" -- eslint --fix ./src/js/*.js",
+    "start": "browser-sync -s -f \"./index.html, dist/**/*, src/**/*\"",
+    "watch:all": "parallelshell \"npm start\" \"npm run watch:scss\" \"npm run watch:js\""
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.3",
+    "browser-sync": "^2.27.10",
+    "eslint": "^8.24.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "node-sass": "^7.0.3",
+    "onchange": "^7.1.0",
+    "parallelshell": "^3.0.1",
+    "prettier": "^2.7.1"
+  }
+}
