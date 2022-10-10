@@ -5,6 +5,7 @@ async function getPokeInfo(poke) {
     let url = poke.url
     const response = await fetch(url);
     const data = await response.json();
+    console.log(data)
 }
 
 let offset = 0
@@ -12,6 +13,7 @@ let offset = 0
 function loadMore() {
     offset = offset + 20
     getPokemons()
+    getDetails()
 }
 
 getMorePokeBtn.addEventListener('click', loadMore)
@@ -21,9 +23,9 @@ async function getPokemons() {
     let pokeapi = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=20`
     const response = await fetch(pokeapi);
     const data = await response.json();
-    const pokemonsArr = data.results
+    let pokemonsArr = data.results
 
-    pokemonsArr.map(pokemon => getPokeInfo(pokemon))
+    return pokemonsArr
 
     // const pokeName = data.name
     // const pokeImgUrl = data.sprites.other['official-artwork'].front_default
@@ -50,5 +52,17 @@ async function getPokemons() {
 
 getPokemons()
 
+// const getDetails = () => {
+//     pokemonsArr.map(pokemon => getPokeInfo(pokemon))
+// }
+
+
+
+const getDetails = () => {
+    let pokemons = getPokemons()
+    pokemons.then(result => console.log(result))
+}
+
+getDetails()
 
 
