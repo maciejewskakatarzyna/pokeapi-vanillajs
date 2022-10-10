@@ -8,17 +8,19 @@ async function getPokemons() {
         const pokeName = data.name
         const pokeImgUrl = data.sprites.other['official-artwork'].front_default
 
-        const all = document.getElementById('all')
+        const pokeList = document.getElementById('pokeList')
         const pokeDiv = document.createElement('div')
+        pokeDiv.classList.add('pokeWrapper')
         const pokeP = document.createElement('p')
         pokeP.textContent = pokeName.charAt(0).toUpperCase() + pokeName.slice(1)
         const pokeImg = document.createElement('img')
         pokeImg.src = pokeImgUrl
 
-        pokeDiv.appendChild(pokeP)
         pokeDiv.appendChild(pokeImg)
+        pokeDiv.appendChild(pokeP)
 
-        all.appendChild(pokeDiv)
+
+        pokeList.appendChild(pokeDiv)
     }
 }
 

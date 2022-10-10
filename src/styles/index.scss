@@ -32,7 +32,9 @@ li {
 
 .header {
   position: fixed;
+  top: 0;
   width: 80vw;
+  height: 6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,8 +53,9 @@ li {
 }
 
 .main {
-  margin: 0 auto;
+  margin: 6rem auto 0 auto;
   background-color: rgb(243, 244, 246);
+  padding: 3rem 2rem;
 }
 
 .section {
@@ -84,4 +87,30 @@ li {
   background-color: rgb(229, 231, 235);
   padding: 2rem 3rem;
   text-align: center;
+}
+
+#pokeList {
+  margin: 6rem auto 0 auto;
+  max-width: 80vw;
+  display: grid;
+  grid-column-gap: 5rem;
+  grid-row-gap: 5rem;
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+  justify-items: center;
+}
+
+.pokeWrapper {
+  width: 25rem;
+  height: 30rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  background-color: rgb(229, 231, 235);
+
+  & img {
+    width: 50%;
+    height: 50%;
+  }
 }
