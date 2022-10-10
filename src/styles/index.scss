@@ -3,7 +3,9 @@ html {
   box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: inherit;
@@ -12,9 +14,9 @@ html {
 }
 
 body {
-  max-width: 120rem;
+  max-width: 80vw;
   margin: 0 auto;
-  border: 0.1rem red solid;
+  background-color: rgb(249, 250, 251);
   font-size: 1.6rem;
   font-family: sans-serif;
 }
@@ -29,10 +31,14 @@ li {
 }
 
 .header {
+  position: fixed;
+  width: 80vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 2rem 3rem;
+  background-color: rgb(229, 231, 235);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .nav_list {
@@ -40,41 +46,42 @@ li {
   flex-direction: row;
 
   &_item {
-   margin-left: 2rem; 
+    margin-left: 2rem;
   }
 }
 
 .main {
-  max-width: 96rem;
   margin: 0 auto;
-  border: 0.1rem blue solid;
+  background-color: rgb(243, 244, 246);
 }
 
 .section {
-
   &_wrapper {
     height: 90vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 2rem;
-  padding: 0 3rem;
-  justify-items: center;
-  align-items: center;
-  border: solid 0.1rem fuchsia
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+    padding: 0 3rem;
+    justify-items: center;
+    align-items: center;
+
+    &:nth-child(2) {
+      background-color: rgb(229, 231, 235);
+    }
   }
   &_desc {
     align-self: center;
-    border: solid 0.1rem rgb(0, 166, 255);
   }
   &_img {
-border: solid 0.1rem green;
+    border: solid 0.1rem green;
     width: 30rem;
     height: 30rem;
   }
 }
 
 .footer {
-  max-width: 120rem;
+  max-width: 80vw;
+  background-color: rgb(229, 231, 235);
   padding: 2rem 3rem;
   text-align: center;
 }
