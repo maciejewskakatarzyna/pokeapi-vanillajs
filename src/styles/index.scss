@@ -31,8 +31,6 @@ li {
 }
 
 .header {
-  position: fixed;
-  top: 0;
   width: 80vw;
   height: 6rem;
   display: flex;
@@ -53,9 +51,12 @@ li {
 }
 
 .main {
-  margin: 6rem auto 0 auto;
+  margin: 0 auto;
   background-color: rgb(243, 244, 246);
-  padding: 3rem 2rem;
+  padding: 3rem 2rem 10rem 2rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .section {
@@ -90,7 +91,7 @@ li {
 }
 
 #pokeList {
-  margin: 6rem auto 0 auto;
+  margin: 0 auto;
   max-width: 80vw;
   display: grid;
   grid-column-gap: 5rem;
@@ -120,6 +121,13 @@ li {
   font-size: 2rem;
 }
 
-// #getMorePokemons {
-//   display: none;
-// }
+#getMorePokemons {
+  display: none;
+  position: absolute;
+  bottom: 2rem;
+  background-color: rgb(229, 231, 235);
+  border: none;
+  padding: 2rem 3rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
