@@ -177,4 +177,14 @@ li {
   top: 0;
   left: 50%;
   transform: translate(-50%, 0);
+
+  p:first-of-type {
+    margin-bottom: 1rem;
+  }
+
+  p:not(:first-of-type) {
+    font-size: 1.6rem;
+    align-self: flex-start;
+    line-height: 2.5rem;
+  }
 }

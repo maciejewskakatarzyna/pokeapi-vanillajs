@@ -65,6 +65,9 @@ const renderDetailsCard = (pokemon, pokeDivTop) => {
     const pokeName = pokemon.name
     const pokeImgUrl = pokemon.sprites.other['official-artwork'].front_default
     const typesList = pokemon.types.map(t => t.type.name)
+    const pokeWeightValue = pokemon.weight
+    const pokeHeightValue = pokemon.height
+
 
     const pokeDiv = document.createElement('div')
     pokeDiv.classList.add('pokeWrapper')
@@ -74,14 +77,21 @@ const renderDetailsCard = (pokemon, pokeDivTop) => {
     const pokeImg = document.createElement('img')
     pokeImg.src = pokeImgUrl
     const pokeType = document.createElement('p')
+    const pokeHeight = document.createElement('p')
+    const pokeWeight = document.createElement('p')
     const types = typesList.map(type => ` ${type}`)
 
-    pokeType.textContent = types
+    pokeType.textContent = `Types: ${types}`
+    pokeHeight.textContent = `Height: ${pokeHeightValue}`
+    pokeWeight.textContent = `Weight: ${pokeWeightValue}`
+
     removeAllChildNodes(pokeDetailsCard)
 
     pokeDiv.appendChild(pokeImg)
     pokeDiv.appendChild(pokeP)
     pokeDiv.appendChild(pokeType)
+    pokeDiv.appendChild(pokeHeight)
+    pokeDiv.appendChild(pokeWeight)
 
     if (showDetailsP) {
         showDetailsP.remove()
