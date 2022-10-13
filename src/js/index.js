@@ -13,10 +13,10 @@ async function getPokeInfo(poke) {
     return pokemonsDetails
 }
 
-let offset = 0
+let offsetPoke = 0
 
 function loadMore() {
-    offset = offset + 20
+    offsetPoke = offsetPoke + 20
     getPokemons()
     getDetails()
     renderPokemons()
@@ -26,7 +26,7 @@ getMorePokeBtn.addEventListener('click', loadMore)
 
 
 async function getPokemons() {
-    let pokeapi = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=20`
+    let pokeapi = `https://pokeapi.co/api/v2/pokemon/?offset=${offsetPoke}&limit=20`
     const response = await fetch(pokeapi);
     const data = await response.json();
     let pokemonsArr = data.results
@@ -55,7 +55,14 @@ function removeAllChildNodes(parent) {
     }
 }
 
-const renderDetailsCard = (pokemon, pokeDivOffsetTop) => {
+function offset(el) {
+    var rect = el.getBoundingClientRect(),
+        scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+        scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+}
+
+const renderDetailsCard = (pokemon, pokeDivTop) => {
     const pokeName = pokemon.name
     const pokeImgUrl = pokemon.sprites.other['official-artwork'].front_default
 
@@ -73,11 +80,9 @@ const renderDetailsCard = (pokemon, pokeDivOffsetTop) => {
     }
     removeAllChildNodes(pokeDetailsCard)
     pokeDetailsCard.appendChild(pokeDiv)
-    const topValue = pokeDivOffsetTop.toString()
-    pokeDetailWrapper.style.top = topValue + "px"
-
+    const topValue = (pokeDivTop - 90).toString() + "px"
+    pokeDetailsCard.style.top = topValue
 }
-
 
 const renderPokemons = async function () {
     let pokeDetailsPromise = await getDetails()
@@ -99,9 +104,8 @@ const renderPokemons = async function () {
         pokeDiv.appendChild(pokeImg)
         pokeDiv.appendChild(pokeP)
         pokeList.appendChild(pokeDiv)
-        let pokeDivOffsetTop = pokeDiv.offsetTop
-        pokeDiv.addEventListener('click', () => renderDetailsCard(pokemon, pokeDivOffsetTop))
-
+        let pokeDivTop = offset(pokeDiv).top
+        pokeDiv.addEventListener('click', () => renderDetailsCard(pokemon, pokeDivTop))
     })
 }
 
