@@ -1,6 +1,5 @@
 const pokeList = document.getElementById('pokeList')
 const getMorePokeBtn = document.getElementById('getMorePokemons')
-const pokeDetailWrapper = document.getElementById('pokeDetails')
 const pokeDetailsCard = document.getElementById('pokeDetailsCard')
 const showDetailsP = document.querySelector('p')
 
@@ -65,6 +64,7 @@ function offset(el) {
 const renderDetailsCard = (pokemon, pokeDivTop) => {
     const pokeName = pokemon.name
     const pokeImgUrl = pokemon.sprites.other['official-artwork'].front_default
+    const typesList = pokemon.types.map(t => t.type.name)
 
     const pokeDiv = document.createElement('div')
     pokeDiv.classList.add('pokeWrapper')
@@ -73,15 +73,22 @@ const renderDetailsCard = (pokemon, pokeDivTop) => {
     pokeP.textContent = pokeName.charAt(0).toUpperCase() + pokeName.slice(1)
     const pokeImg = document.createElement('img')
     pokeImg.src = pokeImgUrl
+    const pokeType = document.createElement('p')
+    const types = typesList.map(type => ` ${type}`)
+
+    pokeType.textContent = types
+    removeAllChildNodes(pokeDetailsCard)
+
     pokeDiv.appendChild(pokeImg)
     pokeDiv.appendChild(pokeP)
+    pokeDiv.appendChild(pokeType)
+
     if (showDetailsP) {
         showDetailsP.remove()
     }
-    removeAllChildNodes(pokeDetailsCard)
-    pokeDetailsCard.appendChild(pokeDiv)
     const topValue = (pokeDivTop - 90).toString() + "px"
     pokeDetailsCard.style.top = topValue
+    pokeDetailsCard.appendChild(pokeDiv)
 }
 
 const renderPokemons = async function () {

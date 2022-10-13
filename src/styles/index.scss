@@ -162,11 +162,12 @@ li {
 
 #pokeDetails {
   text-align: center;
-  display: flex;
-  align-items: center;
   position: relative;
   p {
     font-size: 2rem;
+  }
+
+  .noDetailsInfo {
     margin-top: 6rem;
   }
 }
