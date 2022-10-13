@@ -1,6 +1,8 @@
 const pokeList = document.getElementById('pokeList')
 const getMorePokeBtn = document.getElementById('getMorePokemons')
-
+const pokeDetailWrapper = document.getElementById('pokeDetails')
+const pokeDetailsCard = document.getElementById('pokeDetailsCard')
+const showDetailsP = document.querySelector('p')
 
 async function getPokeInfo(poke) {
     let url = poke.url
@@ -47,6 +49,36 @@ const resolvePromisesSeq = async (tasks) => {
     return results;
 };
 
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+const renderDetailsCard = (pokemon, pokeDivOffsetTop) => {
+    const pokeName = pokemon.name
+    const pokeImgUrl = pokemon.sprites.other['official-artwork'].front_default
+
+    const pokeDiv = document.createElement('div')
+    pokeDiv.classList.add('pokeWrapper')
+    const pokeP = document.createElement('p')
+    pokeP.classList.add('pokeName')
+    pokeP.textContent = pokeName.charAt(0).toUpperCase() + pokeName.slice(1)
+    const pokeImg = document.createElement('img')
+    pokeImg.src = pokeImgUrl
+    pokeDiv.appendChild(pokeImg)
+    pokeDiv.appendChild(pokeP)
+    if (showDetailsP) {
+        showDetailsP.remove()
+    }
+    removeAllChildNodes(pokeDetailsCard)
+    pokeDetailsCard.appendChild(pokeDiv)
+    const topValue = pokeDivOffsetTop.toString()
+    pokeDetailWrapper.style.top = topValue + "px"
+
+}
+
+
 const renderPokemons = async function () {
     let pokeDetailsPromise = await getDetails()
     let pokeDetailsArr = await resolvePromisesSeq(pokeDetailsPromise)
@@ -55,6 +87,7 @@ const renderPokemons = async function () {
     pokeDetailsToRender.map(pokemon => {
         const pokeName = pokemon.name
         const pokeImgUrl = pokemon.sprites.other['official-artwork'].front_default
+
         const pokeDiv = document.createElement('div')
         pokeDiv.classList.add('pokeWrapper')
         const pokeP = document.createElement('p')
@@ -65,9 +98,10 @@ const renderPokemons = async function () {
 
         pokeDiv.appendChild(pokeImg)
         pokeDiv.appendChild(pokeP)
-
         pokeList.appendChild(pokeDiv)
-        getMorePokeBtn.style.display = 'block'
+        let pokeDivOffsetTop = pokeDiv.offsetTop
+        pokeDiv.addEventListener('click', () => renderDetailsCard(pokemon, pokeDivOffsetTop))
+
     })
 }
 

@@ -13,7 +13,7 @@
   </head>
   <body>
     <header class="header">
-      <div class="logo"><a href="/">POKEMON</a></div>
+      <div class="logo"><a href="/">Pokemon API - Vanilla JS</a></div>
       <nav class="nav">
         <ul class="nav_list">
           <li class="nav_list_item">
@@ -30,8 +30,14 @@
         </ul>
       </nav>
     </header>
-    <main class="main">
-      <section id="pokeList"></section>
+    <main class="main allPokemons">
+      <div class="pokeDiv">
+        <section id="pokeList"></section>
+        <section id="pokeDetails">
+          <p>Click the pokemon to see detailed information!</p>
+          <div id="pokeDetailsCard"></div>
+        </section>
+      </div>
       <button id="getMorePokemons">Load more</button>
     </main>
     <footer class="footer">© 2022 Katarzyna Maciejewska</footer>
