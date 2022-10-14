@@ -61,12 +61,37 @@ function offset(el) {
     return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
 }
 
-const renderDetailsCard = (pokemon, pokeDivTop) => {
+async function getPokeSpecies(pokeID) {
+    let url = `https://pokeapi.co/api/v2/pokemon-species/${pokeID}/`
+    const response = await fetch(url);
+    const data = await response.json();
+    pokemonSpecies = []
+    pokemonSpecies.push(data)
+    return pokemonSpecies
+}
+
+async function getPokeChain(chainURL) {
+    const response = await fetch(chainURL);
+    const data = await response.json();
+    pokemonChain = []
+    pokemonChain.push(data)
+    return pokemonChain
+}
+
+const renderDetailsCard = async function (pokemon, pokeDivTop) {
+    const pokeID = pokemon.id
     const pokeName = pokemon.name
     const pokeImgUrl = pokemon.sprites.other['official-artwork'].front_default
     const typesList = pokemon.types.map(t => t.type.name)
     const pokeWeightValue = pokemon.weight
     const pokeHeightValue = pokemon.height
+
+    const species = await getPokeSpecies(pokeID)
+    const evolvesList = species.map(s => (s.evolves_from_species?.name))
+
+    const chainURL = species.map(chain => chain.evolution_chain.url)
+    const chain = await getPokeChain(chainURL)
+    // const chainList = chain.map(c => c.chain.evolves_to.map(el => (el.species.name === pokeName) ? (((el.evolves_to.map(el => el.species.name) === pokeName)) ? 'Final form' : (el.evolves_to.map(el => el.species.name))) : (el.species.name)))
 
 
     const pokeDiv = document.createElement('div')
@@ -77,11 +102,17 @@ const renderDetailsCard = (pokemon, pokeDivTop) => {
     const pokeImg = document.createElement('img')
     pokeImg.src = pokeImgUrl
     const pokeType = document.createElement('p')
+    const evolvesFrom = document.createElement('p')
+    const evolvesTo = document.createElement('p')
     const pokeHeight = document.createElement('p')
     const pokeWeight = document.createElement('p')
     const types = typesList.map(type => ` ${type}`)
+    const evolvesF = evolvesList.map(evolves => `${evolves === undefined ? 'Initial form' : evolves}`)
+    // const evolvesT = chainList.map(chain => `${chain}`)
 
     pokeType.textContent = `Types: ${types}`
+    evolvesFrom.textContent = `Evolves from: ${evolvesF}`
+    // evolvesTo.textContent = `Evolves to: ${evolvesT}`
     pokeHeight.textContent = `Height: ${pokeHeightValue}`
     pokeWeight.textContent = `Weight: ${pokeWeightValue}`
 
@@ -90,8 +121,11 @@ const renderDetailsCard = (pokemon, pokeDivTop) => {
     pokeDiv.appendChild(pokeImg)
     pokeDiv.appendChild(pokeP)
     pokeDiv.appendChild(pokeType)
+    pokeDiv.appendChild(evolvesFrom)
+    // pokeDiv.appendChild(evolvesTo)
     pokeDiv.appendChild(pokeHeight)
     pokeDiv.appendChild(pokeWeight)
+
 
     if (showDetailsP) {
         showDetailsP.remove()
