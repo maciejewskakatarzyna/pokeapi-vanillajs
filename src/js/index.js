@@ -93,7 +93,6 @@ const renderDetailsCard = async function (pokemon, pokeDivTop) {
     const chain = await getPokeChain(chainURL)
     // const chainList = chain.map(c => c.chain.evolves_to.map(el => (el.species.name === pokeName) ? (((el.evolves_to.map(el => el.species.name) === pokeName)) ? 'Final form' : (el.evolves_to.map(el => el.species.name))) : (el.species.name)))
 
-
     const pokeDiv = document.createElement('div')
     pokeDiv.classList.add('pokeWrapper')
     const pokeP = document.createElement('p')
@@ -135,6 +134,7 @@ const renderDetailsCard = async function (pokemon, pokeDivTop) {
     pokeDetailsCard.appendChild(pokeDiv)
 }
 
+
 const renderPokemons = async function () {
     let pokeDetailsPromise = await getDetails()
     let pokeDetailsArr = await resolvePromisesSeq(pokeDetailsPromise)
@@ -152,8 +152,15 @@ const renderPokemons = async function () {
         const pokeImg = document.createElement('img')
         pokeImg.src = pokeImgUrl
 
+        const heart = document.createElement('button')
+        heart.addEventListener('click', () => heart.classList.toggle('liked'))
+
+        heart.classList.add('heart')
+
         pokeDiv.appendChild(pokeImg)
         pokeDiv.appendChild(pokeP)
+        pokeDiv.appendChild(heart)
+
         pokeList.appendChild(pokeDiv)
         let pokeDivTop = offset(pokeDiv).top
         pokeDiv.addEventListener('click', () => renderDetailsCard(pokemon, pokeDivTop))

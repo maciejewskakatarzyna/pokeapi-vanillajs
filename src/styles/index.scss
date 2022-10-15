@@ -193,3 +193,23 @@ li {
     width: 40%;
   }
 }
+
+.heart {
+  width: 2.5rem;
+  height: 2.5rem;
+  align-self: flex-end;
+  border: none;
+  background: none;
+
+  &:before {
+    content: "\2665";
+    color: white;
+    font-size: 3rem;
+  }
+}
+
+.liked:before {
+  content: "\2665";
+  color: red;
+  font-size: 3rem;
+}
