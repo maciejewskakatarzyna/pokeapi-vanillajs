@@ -161,3 +161,13 @@ const renderPokemons = async function () {
 }
 
 renderPokemons()
+
+const handleInfiniteScroll = () => {
+    const endOfPage = window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 0.5;
+
+    if (endOfPage) {
+        setTimeout(loadMore, 500)
+    }
+};
+
+window.addEventListener("scroll", handleInfiniteScroll);
