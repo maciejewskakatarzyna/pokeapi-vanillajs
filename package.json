@@ -1,6 +1,7 @@
 {
   "name": "pokeapi-vanillajs",
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
     "build:scss": "node-sass --output-style compressed -o dist/styles src/styles",
     "watch:scss": "onchange -i -v \"./src/styles/*.scss\" -- npm run build:scss",

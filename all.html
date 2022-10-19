@@ -8,7 +8,6 @@
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Pokemon API - Vanilla JS</title>
-    <script defer src="src/js/index.js"></script>
     <link href="dist/styles/index.css" rel="stylesheet" />
   </head>
   <body>
@@ -32,16 +31,18 @@
     </header>
     <main class="main allPokemons">
       <div class="pokeDiv">
-        <section id="pokeList"></section>
-        <section id="pokeDetails">
+        <section class="pokeList"></section>
+        <section class="pokeDetails">
           <p class="noDetailsInfo">
             Click the pokemon to see detailed information!
           </p>
-          <div id="pokeDetailsCard"></div>
+          <div class="pokeDetailsCard"></div>
         </section>
       </div>
-      <button id="getMorePokemons">Load more</button>
+      <button class="getMorePokemons">Load more</button>
     </main>
     <footer class="footer">© 2022 Katarzyna Maciejewska</footer>
+
+    <script defer type="module" src="src/js/all.js"></script>
   </body>
 </html>
