@@ -13,7 +13,7 @@ let offset = 0
 document.addEventListener('DOMContentLoaded', getPokemons)
 document.addEventListener('DOMContentLoaded', renderPokemons)
 
-window.addEventListener("scroll", () => handleInfiniteScroll(loadMore));
+window.addEventListener("scroll", () => handleInfiniteScroll(loadMorePokemons));
 
 getMorePokeBtn.addEventListener('click', loadMorePokemons)
 
@@ -164,3 +164,4 @@ async function getPokeSpecies(pokeID) {
 //     pokemonChain.push(data)
 //     return pokemonChain
 // }
+
