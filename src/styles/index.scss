@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -16,7 +18,7 @@ html {
 body {
   max-width: 80vw;
   margin: 0 auto;
-  background-color: rgb(249, 250, 251);
+  background-color: $cream;
   font-size: 1.6rem;
   font-family: sans-serif;
 }
@@ -37,7 +39,7 @@ li {
   justify-content: space-between;
   align-items: center;
   padding: 2rem 3rem;
-  background-color: rgb(229, 231, 235);
+  background-color: $dark-grey;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -58,7 +60,7 @@ li {
 .main {
   margin: 0 auto;
   max-width: 80vw;
-  background-color: rgb(243, 244, 246);
+  background-color: $light-grey;
   padding: 3rem 0 10rem 0;
   position: relative;
   display: flex;
@@ -90,10 +92,10 @@ li {
     align-items: center;
 
     &:nth-child(2) {
-      background-color: rgb(229, 231, 235);
+      background-color: $dark-grey;
 
       .section_img {
-        background-color: rgb(243, 244, 246);
+        background-color: $light-grey;
       }
     }
   }
@@ -105,7 +107,7 @@ li {
     line-height: 3.5rem;
   }
   &_img {
-    background-color: rgb(229, 231, 235);
+    background-color: $dark-grey;
     width: 30rem;
     height: 50rem;
   }
@@ -113,7 +115,7 @@ li {
 
 .footer {
   max-width: 80vw;
-  background-color: rgb(229, 231, 235);
+  background-color: $dark-grey;
   padding: 2rem 3rem;
   text-align: center;
 }
@@ -136,7 +138,7 @@ li {
   align-items: center;
   justify-content: space-between;
   padding: 2rem;
-  background-color: rgb(229, 231, 235);
+  background-color: $dark-grey;
 
   & img {
     width: 70%;
@@ -152,7 +154,7 @@ li {
 .getMorePokemons {
   position: absolute;
   bottom: 2rem;
-  background-color: rgb(229, 231, 235);
+  background-color: $dark-grey;
   border: none;
   padding: 2rem 3rem;
   font-size: 1.6rem;
