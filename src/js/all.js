@@ -10,6 +10,7 @@ const noDetailsInfo = document.querySelector('.noDetailsInfo')
 
 let offset = 0
 
+//window.onLoad czy DOMContentLoaded?
 document.addEventListener('DOMContentLoaded', getPokemons)
 document.addEventListener('DOMContentLoaded', renderPokemons)
 
@@ -25,10 +26,17 @@ async function getPokemons() {
     return pokemonsArr
 }
 
+//resolvePromises ???
 async function renderPokemons() {
     const pokeDetailsPromise = await getDetails()
     const pokeDetailsArr = await resolvePromisesSeq(pokeDetailsPromise)
     const pokeDetailsToRender = pokeDetailsArr.flat()
+
+    //dlaczego nie działa zmiana image.src?
+    const handlePokeLike = ((image, pokemon) => {
+        ((image.src === "./dist/assets/heart.svg") ? (image.src = "./dist/assets/heart2.svg") : (image.src = "./dist/assets/heart.svg"))
+        localStorage.setItem("favourite_pokemon", JSON.stringify(pokemon))
+    })
 
     pokeDetailsToRender.map(pokemon => {
         const pokeName = pokemon.name
@@ -44,16 +52,10 @@ async function renderPokemons() {
         heart.classList.add('heartBtn')
         const heartIcon = document.createElement('img')
         heartIcon.classList.add('heartIcon')
-        heartIcon.src = './dist/assets/heart.svg'
+        heartIcon.src = "./dist/assets/heart.svg"
 
-        const handlePokeLike = () => {
-            if (heartIcon.src = './dist/assets/heart.svg') {
-                heartIcon.src = './dist/assets/heart2.svg'
-            }
-            else { heartIcon.src = './dist/assets/heart.svg' }
-        }
+        heart.addEventListener('click', () => handlePokeLike(heartIcon, pokemon))
 
-        heart.addEventListener('click', handlePokeLike)
         heart.appendChild(heartIcon)
 
         pokeDiv.appendChild(pokeImg)
