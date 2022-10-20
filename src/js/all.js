@@ -35,7 +35,10 @@ async function renderPokemons() {
     //dlaczego nie działa zmiana image.src?
     const handlePokeLike = ((image, pokemon) => {
         ((image.src === "./dist/assets/heart.svg") ? (image.src = "./dist/assets/heart2.svg") : (image.src = "./dist/assets/heart.svg"))
+
         localStorage.setItem("favourite_pokemon", JSON.stringify(pokemon))
+        const favPoke = window.localStorage.getItem('favourite_pokemon')
+        console.log(JSON.parse(favPoke))
     })
 
     pokeDetailsToRender.map(pokemon => {
