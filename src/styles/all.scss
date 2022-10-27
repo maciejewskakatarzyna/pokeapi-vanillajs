@@ -32,6 +32,11 @@
   justify-content: space-between;
   padding: 2rem;
   background-color: $dark-grey;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $hover-grey;
+  }
 
   & img {
     width: 70%;
@@ -90,9 +95,26 @@
 }
 
 .heartBtn {
+  cursor: pointer;
   width: 2.5rem;
   height: 2.5rem;
   background: none;
   border: none;
   align-self: flex-end;
+  color: transparent;
+
+  &:hover {
+    color: red;
+
+    path {
+      stroke: none;
+    }
+  }
+
+  &[data-active="true"] {
+    color: red;
+    path {
+      stroke: none;
+    }
+  }
 }
