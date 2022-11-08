@@ -18,6 +18,7 @@ html {
 
 body {
   max-width: 80vw;
+  height: 100vh;
   margin: 0 auto;
   background-color: $cream;
   font-size: $small;
@@ -62,7 +63,7 @@ li {
   margin: 0 auto;
   max-width: 80vw;
   background-color: $light-grey;
-  padding: 3rem 0 10rem 0;
+  padding: 3rem 0;
   position: relative;
   display: flex;
   justify-content: center;

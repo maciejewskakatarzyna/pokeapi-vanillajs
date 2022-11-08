@@ -14,6 +14,7 @@
 }
 
 .pokeList {
+  height: 70vh;
   margin: 2rem;
   display: grid;
   grid-column-gap: 3rem;
@@ -21,6 +22,7 @@
   grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
   justify-items: center;
   width: 100%;
+  overflow: auto;
 }
 
 .pokeWrapper {
@@ -47,17 +49,6 @@
 .pokeName {
   font-weight: bold;
   font-size: $medium;
-}
-
-.getMorePokemons {
-  position: absolute;
-  bottom: 2rem;
-  background-color: $dark-grey;
-  border: none;
-  padding: 2rem 3rem;
-  font-size: $small;
-  cursor: pointer;
-  align-self: center;
 }
 
 .pokeDetails {

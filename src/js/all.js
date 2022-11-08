@@ -1,22 +1,19 @@
 import { resolvePromisesSeq } from "./utils/resolvePromisesSeq.js"
 import { handleInfiniteScroll } from "./utils/infiniteScroll.js"
 import { removeAllChildNodes } from "./utils/removeAllChildNodes.js"
-import { setOffset } from "./utils/setOffset.js"
 import { html, render } from 'https://unpkg.com/lit-html@1.3.0/lit-html.js'
 
 const pokeList = document.querySelector('.pokeList')
-const getMorePokeBtn = document.querySelector('.getMorePokemons')
 const pokeDetailsCard = document.querySelector('.pokeDetailsCard')
 const noDetailsInfo = document.querySelector('.noDetailsInfo')
-
-let offset = 0
 
 document.addEventListener('DOMContentLoaded', getPokemons)
 document.addEventListener('DOMContentLoaded', renderPokemons)
 
 window.addEventListener("scroll", () => handleInfiniteScroll(loadMorePokemons));
 
-getMorePokeBtn.addEventListener('click', loadMorePokemons)
+
+let offset = 0
 
 async function getPokemons() {
     const pokeapi = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=20`
@@ -85,13 +82,12 @@ async function renderPokemons() {
 
         pokeList.appendChild(pokeDiv)
 
-        const pokeDivTop = setOffset(pokeDiv).top
 
-        pokeDiv.addEventListener('click', () => renderDetailsCard(pokemon, pokeDivTop))
+        pokeDiv.addEventListener('click', () => renderDetailsCard(pokemon))
     })
 }
 
-async function renderDetailsCard(pokemon, pokeDivTop) {
+async function renderDetailsCard(pokemon) {
     const pokeID = pokemon.id
     const pokeName = pokemon.name
     const pokeImgUrl = pokemon.sprites.other['official-artwork'].front_default
@@ -142,9 +138,6 @@ async function renderDetailsCard(pokemon, pokeDivTop) {
     if (noDetailsInfo) {
         noDetailsInfo.remove()
     }
-
-    const topValue = (pokeDivTop - 90).toString() + "px"
-    pokeDetailsCard.style.top = topValue
 
     pokeDetailsCard.appendChild(pokeDiv)
 }
