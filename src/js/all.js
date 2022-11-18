@@ -7,12 +7,21 @@ const pokeList = document.querySelector('.pokeList')
 const pokeDetailsCard = document.querySelector('.pokeDetailsCard')
 const noDetailsInfo = document.querySelector('.noDetailsInfo')
 
+const btn1 = document.getElementById('1')
+const btn2 = document.getElementById('2')
+const btn3 = document.getElementById('3')
+
 document.addEventListener('DOMContentLoaded', getPokemons)
 document.addEventListener('DOMContentLoaded', renderPokemons)
+document.addEventListener('DOMContentLoaded', getNumberOfPages)
 
-window.addEventListener("scroll", () => handleInfiniteScroll(loadMorePokemons));
+// window.addEventListener("scroll", () => handleInfiniteScroll(loadMorePokemons));
 
 let offset = 0
+
+btn1.addEventListener('click', () => loadMorePokemons(1))
+btn2.addEventListener('click', () => loadMorePokemons(2))
+btn3.addEventListener('click', () => loadMorePokemons(3))
 
 async function getPokemons() {
     const pokeapi = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=20`
@@ -23,6 +32,8 @@ async function getPokemons() {
 }
 
 async function renderPokemons() {
+    removeAllChildNodes(pokeList)
+
     const pokeDetailsPromise = await getDetails()
     const pokeDetailsArr = await resolvePromisesSeq(pokeDetailsPromise)
     const pokeDetailsToRender = pokeDetailsArr.flat()
@@ -132,11 +143,25 @@ async function getPokeInfo(pokemon) {
     return pokemonsDetails
 }
 
-function loadMorePokemons() {
-    offset = offset + 20
+function loadMorePokemons(index) {
+    if (index !== 1) {
+        offset = 20 * index
+    }
+    else {
+        offset = 0
+    }
+
     getPokemons()
     getDetails()
     renderPokemons()
+}
+
+async function getNumberOfPages() {
+    const url = `https://pokeapi.co/api/v2/pokemon`
+    const response = await fetch(url);
+    const data = await response.json();
+    const pokemonsCount = data.count
+    const numberOfPages = Math.ceil(pokemonsCount / 20)
 }
 
 async function getDetails() {
