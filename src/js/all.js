@@ -14,24 +14,34 @@ document.addEventListener('DOMContentLoaded', renderNumberOfPages)
 let offset = 0
 let numberOfPages = 0
 let currentPage = 1
+let pages
+
+const prevBtn = document.createElement('button');
+const nextBtn = document.createElement('button');
 
 async function renderNumberOfPages() {
-    const pages = await getNumberOfPages()
-
+    pages = await getNumberOfPages();
+    (currentPage === 1) ? (prevBtn.disabled = true) : (prevBtn.disabled = false);
     function handleNextPage() {
-        const nextPageIndex = (currentPage + 1) % pages;
-        currentPage = nextPageIndex
+        const nextPageIndex = (currentPage + 1)
+        if (nextPageIndex > pages) {
+            currentPage = currentPage
+        }
+        else { currentPage = nextPageIndex }
         loadMorePokemons(currentPage)
     }
 
     function handlePrevPage() {
-        const prevPageIndex = (currentPage + pages - 1) % pages;
-        currentPage = prevPageIndex
-        loadMorePokemons(currentPage)
+        const prevPageIndex = (currentPage - 1)
+        if (prevPageIndex < 1) {
+            currentPage = currentPage
+        }
+        else {
+            currentPage = prevPageIndex
+        }
+        loadMorePokemons(currentPage);
     }
 
-    const prevBtn = document.createElement('button')
-    const nextBtn = document.createElement('button')
     prevBtn.innerHTML = '&lt'
     nextBtn.innerHTML = '&gt'
     paginationWrapper.appendChild(prevBtn)
@@ -43,8 +53,10 @@ async function renderNumberOfPages() {
     }
     paginationWrapper.appendChild(nextBtn)
 
-    prevBtn.addEventListener('click', handlePrevPage)
-    nextBtn.addEventListener('click', handleNextPage)
+    prevBtn.addEventListener('click', handlePrevPage);
+    nextBtn.addEventListener('click', handleNextPage);
+
+
 }
 
 async function getPokemons() {
@@ -180,7 +192,10 @@ function loadMorePokemons(index) {
     else {
         offset = 0
     }
-    currentPage = index
+    currentPage = index;
+
+    (currentPage === 1) ? (prevBtn.disabled = true) : (prevBtn.disabled = false);
+    (currentPage === pages) ? (nextBtn.disabled = true) : (nextBtn.disabled = false);
 
     getPokemons()
     getDetails()
