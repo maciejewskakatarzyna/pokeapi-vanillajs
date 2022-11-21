@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', renderPokemons)
 document.addEventListener('DOMContentLoaded', renderNumberOfPages)
 
 let offset = 0
-let numberOfPages = 0
 let currentPage = 1
 let pages
 
@@ -22,6 +21,7 @@ const nextBtn = document.createElement('button');
 async function renderNumberOfPages() {
     pages = await getNumberOfPages();
     (currentPage === 1) ? (prevBtn.disabled = true) : (prevBtn.disabled = false);
+
     function handleNextPage() {
         const nextPageIndex = (currentPage + 1)
         if (nextPageIndex > pages) {
@@ -48,15 +48,13 @@ async function renderNumberOfPages() {
     for (let i = 1; i <= pages; i++) {
         const btn = document.createElement('button')
         btn.textContent = i
-        btn.addEventListener('click', () => loadMorePokemons(i))
-        paginationWrapper.appendChild(btn)
+        btn.addEventListener('click', () => loadMorePokemons(i));
+        paginationWrapper.appendChild(btn);
     }
     paginationWrapper.appendChild(nextBtn)
 
     prevBtn.addEventListener('click', handlePrevPage);
     nextBtn.addEventListener('click', handleNextPage);
-
-
 }
 
 async function getPokemons() {
@@ -87,7 +85,6 @@ async function renderPokemons() {
     })
 
     pokeDetailsToRender.map(pokemon => {
-        const pokeID = pokemon.id
         const pokeName = pokemon.name
         const pokeImgUrl = pokemon.sprites.other['official-artwork'].front_default
         const pokeDiv = document.createElement('div')
@@ -207,7 +204,7 @@ async function getNumberOfPages() {
     const response = await fetch(url);
     const data = await response.json();
     const pokemonsCount = data.count
-    numberOfPages = Math.ceil(pokemonsCount / 20)
+    const numberOfPages = Math.ceil(pokemonsCount / 20) - 1
     return numberOfPages
 }
 
