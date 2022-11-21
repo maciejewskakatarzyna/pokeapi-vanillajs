@@ -1,6 +1,30 @@
 import { resolvePromisesSeq } from "./utils/resolvePromisesSeq.js"
 import { removeAllChildNodes } from "./utils/removeAllChildNodes.js"
 import { html, render } from 'https://unpkg.com/lit-html@1.3.0/lit-html.js'
+import header from "./components/header.js";
+import main from "./components/main.js";
+import footer from "./components/footer.js";
+
+const content = html`<div class="pokeDiv">
+    <div class="pokeListWrapper">
+        <section class="pokeList"></section>
+        <div id="paginationWrapper"></div>
+    </div>
+    <section class="pokeDetails">
+        <p class="noDetailsInfo">
+            Click the pokemon to see detailed information!
+        </p>
+        <div class="pokeDetailsCard"></div>
+    </section>
+</div>
+`
+
+const page = html`
+${header}
+${main(content)}
+${footer}
+`
+render(page, document.body)
 
 const pokeList = document.querySelector('.pokeList')
 const pokeDetailsCard = document.querySelector('.pokeDetailsCard')
