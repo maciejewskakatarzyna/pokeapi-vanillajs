@@ -1,27 +1,51 @@
 import { resolvePromisesSeq } from "./utils/resolvePromisesSeq.js"
-import { handleInfiniteScroll } from "./utils/infiniteScroll.js"
 import { removeAllChildNodes } from "./utils/removeAllChildNodes.js"
 import { html, render } from 'https://unpkg.com/lit-html@1.3.0/lit-html.js'
 
 const pokeList = document.querySelector('.pokeList')
 const pokeDetailsCard = document.querySelector('.pokeDetailsCard')
 const noDetailsInfo = document.querySelector('.noDetailsInfo')
-
-const btn1 = document.getElementById('1')
-const btn2 = document.getElementById('2')
-const btn3 = document.getElementById('3')
+const paginationWrapper = document.getElementById('paginationWrapper')
 
 document.addEventListener('DOMContentLoaded', getPokemons)
 document.addEventListener('DOMContentLoaded', renderPokemons)
-document.addEventListener('DOMContentLoaded', getNumberOfPages)
-
-// window.addEventListener("scroll", () => handleInfiniteScroll(loadMorePokemons));
+document.addEventListener('DOMContentLoaded', renderNumberOfPages)
 
 let offset = 0
+let numberOfPages = 0
+let currentPage = 1
 
-btn1.addEventListener('click', () => loadMorePokemons(1))
-btn2.addEventListener('click', () => loadMorePokemons(2))
-btn3.addEventListener('click', () => loadMorePokemons(3))
+async function renderNumberOfPages() {
+    const pages = await getNumberOfPages()
+
+    function handleNextPage() {
+        const nextPageIndex = (currentPage + 1) % pages;
+        currentPage = nextPageIndex
+        loadMorePokemons(currentPage)
+    }
+
+    function handlePrevPage() {
+        const prevPageIndex = (currentPage + pages - 1) % pages;
+        currentPage = prevPageIndex
+        loadMorePokemons(currentPage)
+    }
+
+    const prevBtn = document.createElement('button')
+    const nextBtn = document.createElement('button')
+    prevBtn.innerHTML = '&lt'
+    nextBtn.innerHTML = '&gt'
+    paginationWrapper.appendChild(prevBtn)
+    for (let i = 1; i <= pages; i++) {
+        const btn = document.createElement('button')
+        btn.textContent = i
+        btn.addEventListener('click', () => loadMorePokemons(i))
+        paginationWrapper.appendChild(btn)
+    }
+    paginationWrapper.appendChild(nextBtn)
+
+    prevBtn.addEventListener('click', handlePrevPage)
+    nextBtn.addEventListener('click', handleNextPage)
+}
 
 async function getPokemons() {
     const pokeapi = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=20`
@@ -51,6 +75,7 @@ async function renderPokemons() {
     })
 
     pokeDetailsToRender.map(pokemon => {
+        const pokeID = pokemon.id
         const pokeName = pokemon.name
         const pokeImgUrl = pokemon.sprites.other['official-artwork'].front_default
         const pokeDiv = document.createElement('div')
@@ -145,11 +170,17 @@ async function getPokeInfo(pokemon) {
 
 function loadMorePokemons(index) {
     if (index !== 1) {
-        offset = 20 * index
+        if (index !== 2) {
+            offset = index * 20
+        }
+        else {
+            offset = index * 10
+        }
     }
     else {
         offset = 0
     }
+    currentPage = index
 
     getPokemons()
     getDetails()
@@ -161,7 +192,8 @@ async function getNumberOfPages() {
     const response = await fetch(url);
     const data = await response.json();
     const pokemonsCount = data.count
-    const numberOfPages = Math.ceil(pokemonsCount / 20)
+    numberOfPages = Math.ceil(pokemonsCount / 20)
+    return numberOfPages
 }
 
 async function getDetails() {
