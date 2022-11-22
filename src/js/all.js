@@ -42,45 +42,6 @@ let pages
 const prevBtn = document.createElement('button');
 const nextBtn = document.createElement('button');
 
-async function renderNumberOfPages() {
-    pages = await getNumberOfPages();
-    (currentPage === 1) ? (prevBtn.disabled = true) : (prevBtn.disabled = false);
-
-    function handleNextPage() {
-        const nextPageIndex = (currentPage + 1)
-        if (nextPageIndex > pages) {
-            currentPage = currentPage
-        }
-        else { currentPage = nextPageIndex }
-        loadMorePokemons(currentPage)
-    }
-
-    function handlePrevPage() {
-        const prevPageIndex = (currentPage - 1)
-        if (prevPageIndex < 1) {
-            currentPage = currentPage
-        }
-        else {
-            currentPage = prevPageIndex
-        }
-        loadMorePokemons(currentPage);
-    }
-
-    prevBtn.innerHTML = '&lt'
-    nextBtn.innerHTML = '&gt'
-    paginationWrapper.appendChild(prevBtn)
-    for (let i = 1; i <= pages; i++) {
-        const btn = document.createElement('button')
-        btn.textContent = i
-        btn.addEventListener('click', () => loadMorePokemons(i));
-        paginationWrapper.appendChild(btn);
-    }
-    paginationWrapper.appendChild(nextBtn)
-
-    prevBtn.addEventListener('click', handlePrevPage);
-    nextBtn.addEventListener('click', handleNextPage);
-}
-
 async function getPokemons() {
     const pokeapi = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=20`
     const response = await fetch(pokeapi);
@@ -230,6 +191,45 @@ async function getNumberOfPages() {
     const pokemonsCount = data.count
     const numberOfPages = Math.ceil(pokemonsCount / 20) - 1
     return numberOfPages
+}
+
+async function renderNumberOfPages() {
+    pages = await getNumberOfPages();
+    (currentPage === 1) ? (prevBtn.disabled = true) : (prevBtn.disabled = false);
+
+    function handleNextPage() {
+        const nextPageIndex = (currentPage + 1)
+        if (nextPageIndex > pages) {
+            currentPage = currentPage
+        }
+        else { currentPage = nextPageIndex }
+        loadMorePokemons(currentPage)
+    }
+
+    function handlePrevPage() {
+        const prevPageIndex = (currentPage - 1)
+        if (prevPageIndex < 1) {
+            currentPage = currentPage
+        }
+        else {
+            currentPage = prevPageIndex
+        }
+        loadMorePokemons(currentPage);
+    }
+
+    prevBtn.innerHTML = '&lt'
+    nextBtn.innerHTML = '&gt'
+    paginationWrapper.appendChild(prevBtn)
+    for (let i = 1; i <= pages; i++) {
+        const btn = document.createElement('button')
+        btn.textContent = i
+        btn.addEventListener('click', () => loadMorePokemons(i));
+        paginationWrapper.appendChild(btn);
+    }
+    paginationWrapper.appendChild(nextBtn)
+
+    prevBtn.addEventListener('click', handlePrevPage);
+    nextBtn.addEventListener('click', handleNextPage);
 }
 
 async function getDetails() {
